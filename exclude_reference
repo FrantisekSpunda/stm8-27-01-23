@@ -19,6 +19,8 @@
 -x _UART1_RX_IRQHandler
 -x _TRAP_IRQHandler
 -x _UART1_TX_IRQHandler
+-x _UART2_RX_IRQHandler
+-x _UART2_TX_IRQHandler
 -x _UART3_RX_IRQHandler
 -x _UART3_TX_IRQHandler
 -x _ADC1_IRQHandler

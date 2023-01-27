@@ -6,5 +6,6 @@
                 "flash"
             ]
         }
-    ]
+    ],
+    "C_Cpp.errorSquiggles": "Disabled"
 }
