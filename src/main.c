@@ -1,59 +1,20 @@
 #include "milis.h"
 #include "stm8s.h"
-#include "max.h"
+#include "max7219.h"
 
-#define DIN_PORT GPIOD          // data in
-#define DIN_PIN GPIO_PIN_4
-#define CS_PORT GPIOD           // chip select
-#define CS_PIN GPIO_PIN_5
-#define CLK_PORT GPIOD          // clock
-#define CLK_PIN GPIO_PIN_6
-
-#define LOW(BAGR) GPIO_WriteLow(BAGR##_PORT, BAGR##_PIN)
-#define HIGH(BAGR) GPIO_WriteHigh(BAGR##_PORT, BAGR##_PIN)
-#define REVERSE(BAGR) GPIO_WriteReverse(BAGR##_PORT, BAGR##_PIN)
-
-int send_max(uint8_t address, uint8_t data)
-{
-    uint8_t mask;
-    LOW(CS);
-    
-    mask = 1 << 7; // 0b10000000
-    while(mask) {
-        if(address & mask) {
-            HIGH(DIN);
-        } else {
-            LOW(DIN);
-        }
-        HIGH(CLK);
-        mask = mask >> 1;
-        LOW(CLK);
-    }
-
-    mask = 1 << 7;
-    while(mask) {
-        if(data & mask) {
-            HIGH(DIN);
-        } else {
-            LOW(DIN);
-        }
-        HIGH(CLK);
-        mask = mask >> 1;
-        LOW(CLK);
-    }
-
-    HIGH(CS);
-}
+#include "uart1.h"
+// toto jenom kvuli uart1
+#include "stdio.h"
 
 void setup(void)
 {
     CLK_HSIPrescalerConfig(CLK_PRESCALER_HSIDIV1);      // taktovani MCU na 16MHz
 
-    GPIO_Init(DIN_PORT, DIN_PIN, GPIO_MODE_OUT_PP_LOW_SLOW);
-    GPIO_Init(CS_PORT, CS_PIN, GPIO_MODE_OUT_PP_LOW_SLOW);
-    GPIO_Init(CLK_PORT, CLK_PIN, GPIO_MODE_OUT_PP_LOW_SLOW);
+    init_max();
 
     init_milis();
+
+    init_uart1();
 }
 
 
@@ -64,7 +25,7 @@ void main(void)
 
     setup();
     LOW(CS);
-    
+
     send_max(DECODE_MODE, DECODE_ALL); // zapnutí znakové sady na všech cifrách
     send_max(INTENSITY, 3); //nastavení jasu
     send_max(SCAN_LIMIT, 7); //velikost displeje je 8 cifer (počítáno od nuly)
@@ -81,6 +42,9 @@ void main(void)
     send_max(6, 6);
     send_max(7, 7);
 
+    char chart = 'D';
+
+
     while (1) {
         if (milis() - time > 333) {
             time = milis();
@@ -89,6 +53,7 @@ void main(void)
                 bagr = 1;
             }
 
+            putchar(chart);
         }
     }
 }

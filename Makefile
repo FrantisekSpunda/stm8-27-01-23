@@ -4,8 +4,8 @@
 #
 #### STM8 device
 #
-#DEVICE_FLASH=stm8s208rb
-DEVICE_FLASH=stm8s105c6
+DEVICE_FLASH=stm8s208rb
+# DEVICE_FLASH=stm8s105c6
 #DEVICE_FLASH=stm8s003k3
 # DEVICE_FLASH=stm8s103f3
 
@@ -99,7 +99,7 @@ SPL_SRC_DIR = ../SPL-$(DEVICE)/src/
 SPL_INC_DIR = ../SPL-$(DEVICE)/inc/
 # add all library sources used here singly ... or all .c files in SPL src dir
 SPL_SOURCE  = stm8s_gpio.c stm8s_clk.c stm8s_tim4.c stm8s_itc.c 
-#SPL_SOURCE += stm8s_uart1.c
+SPL_SOURCE += stm8s_uart1.c
 #SPL_SOURCE += stm8s_adc2.c
 #SPL_SOURCE += stm8s_tim1.c
 #SPL_SOURCE += stm8s_tim2.c

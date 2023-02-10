@@ -14,7 +14,7 @@ void init_uart1(void)
 {
     UART1_DeInit();
     /* UART1 configuration ------------------------------------------------------ */
-    UART1_Init((uint32_t) 115200,       // - BaudRate = 115200 baud  
+    UART1_Init((uint32_t) 9600,       // - BaudRate = 115200 baud  
                UART1_WORDLENGTH_8D,     // - Word Length = 8 Bits
                UART1_STOPBITS_1,        // - One Stop Bit
                UART1_PARITY_NO, // - No parity
@@ -25,6 +25,7 @@ void init_uart1(void)
 }
 
 
+// char putchar(c){
 PUTCHAR_PROTOTYPE {
     /* Write a character to the UART1 */
     UART1_SendData8(c);
@@ -41,6 +42,7 @@ PUTCHAR_PROTOTYPE {
   * @retval char Character to Read
   */
 GETCHAR_PROTOTYPE {
+// char getchar(c){
 #ifdef _COSMIC_
     char c = 0;
 #else

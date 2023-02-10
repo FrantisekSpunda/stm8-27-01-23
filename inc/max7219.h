@@ -1,4 +1,20 @@
+#ifndef _MAX7219_H_
+#define _MAX7219_H_ 1
 
+#include "stm8s.h"
+
+#define DIN_PORT GPIOD          // data in
+#define DIN_PIN GPIO_PIN_4
+#define CS_PORT GPIOD           // chip select
+#define CS_PIN GPIO_PIN_5
+#define CLK_PORT GPIOD          // clock
+#define CLK_PIN GPIO_PIN_6
+
+#define LOW(BAGR) GPIO_WriteLow(BAGR##_PORT, BAGR##_PIN)
+#define HIGH(BAGR) GPIO_WriteHigh(BAGR##_PORT, BAGR##_PIN)
+#define REVERSE(BAGR) GPIO_WriteReverse(BAGR##_PORT, BAGR##_PIN)
+
+/////////////
 #define NOOP 		0       // No operation
 #define DIGIT0 		1       // zápis hodnoty na 1. cifru
 #define DIGIT1 		2       // zápis hodnoty na 1. cifru
@@ -25,3 +41,9 @@
 // argumenty pro DECODE_MOD
 #define DECODE_ALL		0b11111111      // (lepší zápis 0xff) zapíná znakovou sadu pro všechny cifry
 #define DECODE_NONE		0       // vypíná znakovou sadu pro všechny cifry
+/////////////
+
+void send_max(uint8_t address, uint8_t data);
+void init_max();
+
+#endif
