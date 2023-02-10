@@ -53,7 +53,8 @@ void main(void)
                 bagr = 1;
             }
 
-            putchar(chart);
+            // putchar(chart);
+            printf("bobek");
         }
     }
 }
